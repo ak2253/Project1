@@ -6,6 +6,7 @@ public class RnSArray {
 		ar[i]=ar[j];
 		ar[j]=temp;
 	}
+	
 	public static Integer[] getRandomArray(int n) { //get random array
 		Random rand=new Random();
 		Integer[] ar=getSortedArray(n); //create array
@@ -25,6 +26,7 @@ public class RnSArray {
 		}
 		return ar;
 	}
+	
 	public static void main(String[] args) {
 		Random rand=new Random();
 		Integer[] rar=getRandomArray(10);
