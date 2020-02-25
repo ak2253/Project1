@@ -49,7 +49,6 @@ class BSTIter {
 		}
 	}
 	
-	//not sure if recursive
 	public void deleteIter(Integer num) { //delete num in BST
 		NodeIter temproot=root;
 		for(;;) {
