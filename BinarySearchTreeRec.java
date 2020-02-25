@@ -154,6 +154,7 @@ class BSTR {
 
 public class BinarySearchTreeRec {
 	public static void main(String[] args) {
+		//test cases
 		BSTR tree = new BSTR();
 		System.out.println(tree.findMaxRec(tree.root));
 		System.out.println(tree.findMinRec(tree.root));
