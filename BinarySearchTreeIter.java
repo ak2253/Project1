@@ -204,7 +204,6 @@ class BSTIter {
 					while(rtemproot.left.left!=null)
 						rtemproot=rtemproot.left;
 					NodeIter ltemproot=rtemproot.left;
-					rtemproot.left=ltemproot.right;
 					ltemproot.left=root.left;
 					ltemproot.right=root.right;
 					ltemproot.parent=tempp;
