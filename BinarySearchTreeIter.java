@@ -171,6 +171,33 @@ class BSTIter {
 		}
 	}
 	
+	public Integer maxdepth() { //find max depth of BST
+		if(root==null)
+			return 0;
+		Queue<NodeIter> q=new LinkedList<>();
+		Queue<Integer> height=new LinkedList<>();
+		q.add(root);
+		height.add(0);
+		int max=0;
+		while(!q.isEmpty()) {
+			NodeIter cnode=q.poll();
+			int cheight=height.poll();
+			if(cnode.left==null&&cnode.right==null) {
+				if(cheight>max)
+					max=cheight;
+			}
+			if(cnode.left!=null) {
+				q.add(cnode.left);
+				height.add(cheight+1);
+			}
+			if(cnode.right!=null) {
+				q.add(cnode.right);
+				height.add(cheight+1);
+			}
+		}
+		return max;
+	}
+	
 	private NodeIter delete(Integer num,NodeIter root) { //delete current root
 		if(root!=null) {
 			NodeIter tempp=root.parent;
