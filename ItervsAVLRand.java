@@ -23,8 +23,8 @@ public class ItervsAVLRand {
 		}
 		end=System.currentTimeMillis();
 		long itertime=end-start;
-		System.out.println("Took time for Balance tree: "+AVLtime+" ms");
-		System.out.println("Took time for Normal tree: "+itertime+" ms");
+		System.out.println("Time took for Balance tree: "+AVLtime+" ms");
+		System.out.println("Time took for Normal tree: "+itertime+" ms");
 		System.out.println("\ntime difference: "+(itertime-AVLtime)+" ms");
 	}
 }
