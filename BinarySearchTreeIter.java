@@ -1,3 +1,6 @@
+import java.util.LinkedList;
+import java.util.Queue;
+
 class NodeIter{
 	Integer value;
 	NodeIter right, left, parent;
@@ -170,8 +173,7 @@ class BSTIter {
 			temproot=temproot.right;
 		}
 	}
-	
-	public Integer maxdepth() { //find max depth of BST
+	public Integer maxdepth() { //find deeps level of BST
 		if(root==null)
 			return 0;
 		Queue<NodeIter> q=new LinkedList<>();
@@ -197,7 +199,6 @@ class BSTIter {
 		}
 		return max;
 	}
-	
 	private NodeIter delete(Integer num,NodeIter root) { //delete current root
 		if(root!=null) {
 			NodeIter tempp=root.parent;
@@ -221,19 +222,23 @@ class BSTIter {
 			}
 			else {
 				if(root.right.left==null) {
-					root.right.left=left;
-					root=right;
-					root.parent=tempp;
+					root.right.left=root.left;
+					root.right.left.parent=root.right;
+					root.right.parent=root.parent;
+					root=root.right;
 					return root;
 				}
 				else {
-					NodeIter rtemproot=right;
+					NodeIter rtemproot=root.right;
 					while(rtemproot.left.left!=null)
 						rtemproot=rtemproot.left;
 					NodeIter ltemproot=rtemproot.left;
+					rtemproot.left=null;
 					ltemproot.left=root.left;
+					ltemproot.left.parent=ltemproot;
 					ltemproot.right=root.right;
-					ltemproot.parent=tempp;
+					ltemproot.right.parent=ltemproot;
+					ltemproot.parent=root.parent;
 					return ltemproot;
 				}
 			}
@@ -261,35 +266,4 @@ class BSTIter {
 }
 
 public class BinarySearchTreeIter {
-	public static void main(String[] args) {
-		//test cases
-        BSTIter tree = new BSTIter();
-		System.out.println(tree.findNextIter(17));
-		System.out.println(tree.findPrevIter(19));
-		System.out.println(tree.findMaxIter());
-		System.out.println(tree.findMinIter());
-		tree.insertIter(10);
-		tree.insertIter(5);
-		tree.insertIter(5);
-		tree.insertIter(6);
-		tree.insertIter(7);
-		tree.insertIter(20);
-		tree.insertIter(12);
-		tree.insertIter(11);
-		tree.insertIter(16);
-		tree.insertIter(19);
-		tree.insertIter(18);
-		tree.insertIter(17);
-		System.out.println(tree.findNextIter(1));
-		System.out.println(tree.findPrevIter(19));
-		System.out.println(tree.findMaxIter());
-		tree.deleteIter(20);
-		tree.deleteIter(20);
-		System.out.println(tree.findMaxIter());
-		System.out.println(tree.findMinIter());
-		tree.deleteIter(5);
-		tree.deleteIter(5);
-		System.out.println(tree.findPrevIter(5));
-		System.out.println(tree.findMinIter());
-	}
 }
