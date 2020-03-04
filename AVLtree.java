@@ -91,17 +91,19 @@ class AVLIter {
 				break;
 			}
 		}
-		while(temproot.parent!=null) { //rebalance parent nodes if needed
-			temproot=temproot.parent;
+		if(temproot!=null) {
+			while(temproot.parent!=null) { //rebalance parent nodes if needed
+				temproot=temproot.parent;
+				temproot.bf=newBF(temproot.left,temproot.right);
+				temproot.height=newHeight(temproot.left,temproot.right)+1;
+				temproot=rebalance(temproot,temproot.parent);
+			}
+			//rebalance root of BST if needed
 			temproot.bf=newBF(temproot.left,temproot.right);
 			temproot.height=newHeight(temproot.left,temproot.right)+1;
 			temproot=rebalance(temproot,temproot.parent);
+			root=temproot;
 		}
-		//rebalance root of BST if needed
-		temproot.bf=newBF(temproot.left,temproot.right);
-		temproot.height=newHeight(temproot.left,temproot.right)+1;
-		temproot=rebalance(temproot,temproot.parent);
-		root=temproot;
 	}
 	
 	public Integer findNextIter(Integer num) { //finding next node to node num
@@ -312,40 +314,41 @@ class AVLIter {
 	
 	private BalNode delete(Integer num,BalNode root) { //delete current root
 		if(root!=null) {
-			BalNode tempp=root.parent;
-			BalNode right=root.right;
-			BalNode left=root.left;
 			/*four total cases for deleting
 			 * 1. no child
 			 * 2. left child but no right child
 			 * 3. no left child but right child
 			 * 4. left child and right child
 			*/
-			if(left==null&&right==null)
+			if(root.left==null&&root.right==null)
 				return null;
-			else if(left!=null&&right==null) {
-				left.parent=tempp;
-				return left;
+			else if(root.left!=null&&root.right==null) {
+				root.left.parent=root.parent;
+				return root.left;
 			}
-			else if(left==null&&right!=null) {
-				right.parent=tempp;
-				return right;
+			else if(root.left==null&&root.right!=null) {
+				root.right.parent=root.parent;
+				return root.right;
 			}
 			else {
 				if(root.right.left==null) {
-					root.right.left=left;
-					root=right;
-					root.parent=tempp;
+					root.right.left=root.left;
+					root.right.left.parent=root.right;
+					root.right.parent=root.parent;
+					root=root.right;
 					return root;
 				}
 				else {
-					BalNode rtemproot=right;
+					BalNode rtemproot=root.right;
 					while(rtemproot.left.left!=null)
 						rtemproot=rtemproot.left;
 					BalNode ltemproot=rtemproot.left;
+					rtemproot.left=null;
 					ltemproot.left=root.left;
+					ltemproot.left.parent=ltemproot;
 					ltemproot.right=root.right;
-					ltemproot.parent=tempp;
+					ltemproot.right.parent=ltemproot;
+					ltemproot.parent=root.parent;
 					return ltemproot;
 				}
 			}
